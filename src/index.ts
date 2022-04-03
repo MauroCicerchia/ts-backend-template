@@ -1,5 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const app: Application = express();
 
