@@ -8,18 +8,21 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended"
+        "plugin:import/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript"
     ],
     "rules": {
+        "semi": [
+            "error",
+            "always"
+        ],
         "object-curly-spacing": [
             "error",
             "always"
         ],
         "eol-last": "error",
-        "semi": [
-            "error",
-            "always"
-        ],
         "quotes": [
             "error",
             "double"
@@ -92,8 +95,7 @@
                     "sibling",
                     "index",
                     "unknown"
-                ],
-                "newlines-between": "never"
+                ]
             }
         ]
     }

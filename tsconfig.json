@@ -8,6 +8,10 @@
         "moduleResolution": "node",
         "esModuleInterop": true
     },
+    "include": [
+        "src/**/*",
+        "src/types/decs.d.ts"
+    ],
     "exclude": [
         "node_modules"
     ]

@@ -1,15 +1,12 @@
 import express, { Application, Request, Response } from "express";
-import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
-import cors from "cors";
+import initExpress from "./init/express";
 
 dotenv.config();
 
 const app: Application = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: true }));
+initExpress(app);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Healthy");
