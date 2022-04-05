@@ -12,5 +12,9 @@ const service = () => new ProductsService();
 const controller = () => new ProductsController(service());
 
 route.get("/", (req: Request, res: Response) => controller().getAll(req, res));
+route.get("/:id", (req: Request, res: Response) => controller().getById(req, res));
+route.post("/", (req: Request, res: Response) => controller().create(req, res));
+route.put("/:id", (req: Request, res: Response) => controller().update(req, res));
+route.delete("/:id", (req: Request, res: Response) => controller().delete(req, res));
 
 export default router;

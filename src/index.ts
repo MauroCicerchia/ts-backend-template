@@ -9,11 +9,11 @@ const app: Application = express();
 initExpress(app);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Healthy");
+    res.send("Healthy");
 });
 
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
+    console.log(`Server is running on PORT ${PORT}`);
 });
