@@ -26,8 +26,6 @@ class BaseRepository<T extends { id: TId }, TId> {
     create(entity: T): Promise<T> {
         this.entities.push(entity);
 
-        console.log(this.entities);
-
         return Promise.resolve(entity);
     }
 

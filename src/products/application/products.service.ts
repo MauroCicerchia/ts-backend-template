@@ -1,27 +1,29 @@
 import { IService } from "../../types/types";
+import IProductRepository from "../domain/IProductRepository";
 import Product from "../domain/product";
-import productRepository from "../domain/productRepository";
 import { ProductId } from "../types";
 
 class ProductsService implements IService {
+    constructor(private productRepository: IProductRepository) {}
+
     getAll() {
-        return productRepository.getAll();
+        return this.productRepository.getAll();
     }
 
     getById(id: ProductId) {
-        return productRepository.getById(id);
+        return this.productRepository.getById(id);
     }
 
     create(product: Product) {
-        return productRepository.create(product);
+        return this.productRepository.create(product);
     }
 
     update(product: Product) {
-        return productRepository.update(product);
+        return this.productRepository.update(product);
     }
 
     delete(id: ProductId) {
-        return productRepository.delete(id);
+        return this.productRepository.delete(id);
     }
 }
 
