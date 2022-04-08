@@ -1,19 +1,14 @@
 import express, { Application, Request, Response } from "express";
-import * as dotenv from "dotenv";
 import initExpress from "./init/express";
-
-dotenv.config();
+import initMongo from "./init/mongo";
+import config from "./environment/config";
 
 const app: Application = express();
 
 initExpress(app);
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Healthy");
-});
-
-const PORT = process.env.PORT || 8000;
-
-app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}`);
-});
+initMongo().then(() =>
+    app.listen(config.port, () => {
+        console.log(`Server is running on PORT ${config.port}`);
+    }),
+);

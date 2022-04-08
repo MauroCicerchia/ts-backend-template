@@ -21,7 +21,7 @@ class ProductsController {
     }
 
     update(req: Request, res: Response) {
-        return this.service.update(req.body);
+        return this.service.update(req.params.id, req.body);
     }
 
     delete(req: Request, res: Response) {

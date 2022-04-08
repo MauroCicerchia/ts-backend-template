@@ -1,8 +1,12 @@
+import { ObjectId } from "mongoose";
 import MongoRepository from "../../generic/infrastructure/mongoRepository";
 import IProductRepository from "../domain/IProductRepository";
-import { ProductId } from "../types";
-import type Product from "../domain/product";
+import productModel, { ProductDocument } from "./productModel";
 
-class ProductRepository extends MongoRepository<Product, ProductId> implements IProductRepository {}
+class ProductRepository extends MongoRepository<ProductDocument, ObjectId> implements IProductRepository {
+    constructor() {
+        super(productModel);
+    }
+}
 
-export default new ProductRepository();
+export default ProductRepository;

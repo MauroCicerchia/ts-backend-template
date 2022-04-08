@@ -1,50 +1,50 @@
-import _ from "lodash";
 import Promise from "bluebird";
+import { Model } from "mongoose";
 import EntityNotFound from "../domain/exceptions/entityNotFound";
 
 class BaseRepository<T extends { id: TId }, TId> {
-    private entities: T[];
-
-    constructor() {
-        this.entities = [];
-    }
+    constructor(private model: Model<T>) {}
 
     getAll(): Promise<T[]> {
-        return Promise.resolve(this.entities);
+        return Promise.resolve(this.model.find({}));
     }
 
-    getById(id: TId): Promise<T> {
-        const e = this.entities.find((e: T) => e.id === id);
-
-        if (!e) {
-            throw new EntityNotFound("Entity not found");
-        }
-
-        return Promise.resolve(e);
+    getById(id: TId): Promise<T | null> {
+        return Promise.resolve(this.model.findById(id))
+            .tap((entity) => {
+                if (!entity) {
+                    throw new EntityNotFound(`Entity with id ${id} not found`);
+                }
+            })
+            .catch(() => {
+                throw new EntityNotFound(`Entity with id ${id} not found`);
+            });
     }
 
     create(entity: T): Promise<T> {
-        this.entities.push(entity);
-
-        return Promise.resolve(entity);
+        return Promise.resolve(this.model.create(this.buildForCreate(entity)));
     }
 
-    update(entity: T): Promise<T> {
-        const e = _.find(this.entities, (e: T) => e.id === entity.id);
+    update(id: TId, entity: T): Promise<T | null> {
+        console.log("Hola", id, entity);
 
-        if (!e) {
-            throw new EntityNotFound("Entity not found");
-        }
-
-        _.assign(e, entity);
-
-        return Promise.resolve(e);
+        return Promise.resolve(this.model.findByIdAndUpdate(id, this.buildForUpdate(entity))).tap((updatedEntity) => {
+            if (!updatedEntity) {
+                throw new EntityNotFound(`Entity with id ${id} not found`);
+            }
+        });
     }
 
-    delete(id: TId): Promise<void> {
-        _.remove(this.entities, (e: T) => e.id === id);
+    delete(id: TId): Promise<unknown> {
+        return Promise.resolve(this.model.findByIdAndRemove(id));
+    }
 
-        return Promise.resolve();
+    protected buildForCreate(entity: T): T {
+        return entity;
+    }
+
+    protected buildForUpdate(entity: T): T {
+        return entity;
     }
 }
 
